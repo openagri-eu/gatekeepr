@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <h3 class="text-center mb-4">Login to GateKeeper</h3>
+
+        <div id="error-message" class="alert alert-danger d-none"></div>
+
+        <form action="/auth/validate_login" method="post" id="login-form">
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $("#login-form").on("submit", function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response.success) {
+                    // Redirect to FarmCalendar if login is successful
+                    window.location.href = response.redirect_url;
+                } else {
+                    // Show error message without redirecting
+                    $("#error-message").text(response.error).removeClass("d-none");
+                }
+            },
+            error: function () {
+                $("#error-message").text("An error occurred. Please try again.").removeClass("d-none");
+            }
+        });
+    });
+</script>
+{% endblock %}

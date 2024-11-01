@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title | default("GateKeeper") }}</title>
+    <link href="{{ url_for('static', path='css/bootstrap.min.css') }}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header -->
+    {% include "header.html" %}
+
+    <main class="container my-5">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include "footer.html" %}
+
+    <script src="{{ url_for('static', path='js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ url_for('static', path='js/bootstrap.bundle.min.js') }}"></script>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>
