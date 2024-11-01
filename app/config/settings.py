@@ -17,9 +17,9 @@ class Settings(BaseSettings):
     db_port: str
 
     # Define token expiration settings with type annotations
-    ACCESS_TOKEN_EXPIRE_HOURS: ClassVar[int] = 1  # Access token expires in 1 hour
-    REFRESH_TOKEN_EXPIRE_DAYS: ClassVar[int] = 7  # Refresh token expires in 7 days
-    AUTH_TOKEN_EXPIRE_MINUTES: ClassVar[int] = 30  # Auth token expires in 30 minutes
+    ACCESS_TOKEN_EXPIRE_HOURS: ClassVar[int] = 1
+    REFRESH_TOKEN_EXPIRE_DAYS: ClassVar[int] = 7
+    AUTH_TOKEN_EXPIRE_MINUTES: ClassVar[int] = 30
 
     JWT_SIGNING_KEY: str = os.getenv("JWT_SIGNING_KEY", "default_key")
 
