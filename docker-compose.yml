@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  gatekeeper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gatekeeper
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    restart: no
+
+  mysql:
+    build:
+      context: ./mysql_docker
+    container_name: gatekeeper_mysql
+    restart: no
+    env_file:
+      - .env
+    ports:
+      - "3310:3306"
+    volumes:
+      - mysql_data_gatekeeper:/var/lib/mysql
+#    networks:
+#      - shared_network_gatekeeper
+
+  phpmyadmin_gatekeeper:
+    image: phpmyadmin/phpmyadmin
+    container_name: gatekeeper_phpmyadmin
+    restart: no
+    env_file:
+      - .env
+    ports:
+      - "8087:80"
+#    networks:
+#      - shared_network_gatekeeper
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data_gatekeeper:
+
+#networks:
+#  shared_network_gatekeeper:
+#    driver: bridge
+#    external: true
